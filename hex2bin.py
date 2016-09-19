@@ -4,8 +4,8 @@ import sys
 import re
 import io
 
-hex = sys.argv[1]
-if re.match('0?x?[A-Fa-f0-9]+', hex) == None:
+hex = sys.argv[1].lower()
+if re.match('^0?x?[a-f0-9]+$', hex) == None:
     print("The string {0} is not a hexadecimal number.".format(hex))
     exit(1)
 
@@ -41,5 +41,11 @@ def hex_2_bin(hex):
     binary.close()
     return bin_value
 
-print("Binary {0}".format(hex_2_bin(hex[2:])))
+if hex[0] == '0' and hex[1] == 'x':
+    bin = hex_2_bin(hex[2:])
+elif hex[0] == 'x':
+    bin = hex_2_bin(hex[1:])
+else:
+    bin = hex_2_bin(hex)
+print("Binary {0}".format(bin))
 
